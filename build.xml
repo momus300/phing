@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="StartowyPlik" default="default">
+
+    <property name="nazwa" value="Marek"/>
+    <property name="repo.dir" value="./app"/>
+    <property name="repository" value="https://github.com/momus300/wzorce.git"/>
+    <property name="source" value="origin"/>
+    <property name="branch" value="master"/>
+
+    <target name="default">
+        <echo>Witaj ${nazwa}! zaczynamy...</echo>
+        <phingcall target="gitPull"/>
+    </target>
+
+    <target name="gitClone">
+        <echo>klonuje ${repository} ${branch}</echo>
+        <gitclone branch="${branch}" repository="${repository}" targetPath="${repo.dir}"/>
+    </target>
+
+    <target name="gitPull">
+        <gitpull repository="${repo.dir}"
+                 source="${source}"
+                 refspec="${branch}"/>
+    </target>
+
+    <target name="composerInstall">
+        <echo>composer install</echo>
+        <exec outputProperty="composer" command="which composer"/>
+        <composer
+                composer="${composer}"
+                command="install" />
+    </target>
+
+
+</project>
+
